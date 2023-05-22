@@ -1,4 +1,4 @@
-package xyz.xfqlittlefan.notdeveloper.ui.theme
+package com.karomap.autotime.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

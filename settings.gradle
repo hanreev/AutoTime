@@ -13,5 +13,5 @@ dependencyResolutionManagement {
         maven { url "https://api.xposed.info/" }
     }
 }
-rootProject.name = "IAmNotADeveloper"
+rootProject.name = "AutoTime"
 include ':app'

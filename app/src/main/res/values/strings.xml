@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">IAmNotADeveloper</string>
+    <string name="app_name">AutoTime</string>
     <string name="hide_development_mode">Hide development mode</string>
     <string name="hide_usb_debugging">Hide USB debugging</string>
     <string name="hide_wireless_debugging">Hide wireless debugging</string>
+    <string name="enable_auto_time">Enable auto time</string>
+    <string name="enable_auto_timezone">Enable auto timezone</string>
     <string name="description">All changes will take effect immediately</string>
     <string name="test">Test</string>
-    <string name="dialog_test_content">Development mode status: %1$s\nUSB debugging status: %2$s\nWireless debugging status: %3$s</string>
+    <string name="dialog_test_content">Auto time status: %1$s\nAuto timezone status: %2$s</string>
     <string name="on">On</string>
     <string name="off">Off</string>
-    <string name="module_not_actived">Module not actived</string>
-    <string name="unable_to_save_settings">Unable to save settings, all features are enabled by default. Plese try to lower your Android version to below Android 8.1 or use the LSPosed Framwork and activate this module</string>
+    <string name="module_not_activated">Module not activated</string>
+    <string name="unable_to_save_settings">Unable to save settings, all features are enabled by default. Please try to lower your Android version to below Android 8.1 or use the LSPosed Framework and activate this module</string>
 </resources>

@@ -1,4 +1,4 @@
-package xyz.xfqlittlefan.notdeveloper.xposed
+package com.karomap.autotime.xposed
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -1,9 +1,11 @@
-package xyz.xfqlittlefan.notdeveloper.ui.activities
+package com.karomap.autotime.ui.activities
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.provider.Settings
+import android.provider.Settings.Global.AUTO_TIME
+import android.provider.Settings.Global.AUTO_TIME_ZONE
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -20,15 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
-import xyz.xfqlittlefan.notdeveloper.ADB_ENABLED
-import xyz.xfqlittlefan.notdeveloper.ADB_WIFI_ENABLED
-import xyz.xfqlittlefan.notdeveloper.DEVELOPMENT_SETTINGS_ENABLED
-import xyz.xfqlittlefan.notdeveloper.R
-import xyz.xfqlittlefan.notdeveloper.ui.composables.rememberBooleanSharedPreference
-import xyz.xfqlittlefan.notdeveloper.ui.theme.IAmNotADeveloperTheme
-import xyz.xfqlittlefan.notdeveloper.util.allBars
-import xyz.xfqlittlefan.notdeveloper.xposed.isModuleActive
-import xyz.xfqlittlefan.notdeveloper.xposed.isPreferencesReady
+import com.karomap.autotime.R
+import com.karomap.autotime.ui.composables.rememberBooleanSharedPreference
+import com.karomap.autotime.ui.theme.IAmNotADeveloperTheme
+import com.karomap.autotime.util.allBars
+import com.karomap.autotime.xposed.isModuleActive
+import com.karomap.autotime.xposed.isPreferencesReady
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("WorldReadableFiles")
@@ -59,50 +58,35 @@ class MainActivity : ComponentActivity() {
                     ) {
                         var testResult by remember { mutableStateOf<List<Boolean>?>(null) }
                         if (isPreferencesReady()) {
-                            @Suppress("DEPRECATION") var devSettings by rememberBooleanSharedPreference(
+                            @Suppress("DEPRECATION") var autoTime by rememberBooleanSharedPreference(
                                 mode = Context.MODE_WORLD_READABLE,
-                                key = DEVELOPMENT_SETTINGS_ENABLED,
+                                key = AUTO_TIME,
                                 defaultValue = true
                             )
-                            @Suppress("DEPRECATION") var usbDebugging by rememberBooleanSharedPreference(
+                            @Suppress("DEPRECATION") var autoTimezone by rememberBooleanSharedPreference(
                                 mode = Context.MODE_WORLD_READABLE,
-                                key = ADB_ENABLED,
-                                defaultValue = true
-                            )
-                            @Suppress("DEPRECATION") var wirelessDebugging by rememberBooleanSharedPreference(
-                                mode = Context.MODE_WORLD_READABLE,
-                                key = ADB_WIFI_ENABLED,
+                                key = AUTO_TIME_ZONE,
                                 defaultValue = true
                             )
 
                             ListItem(headlineText = {
-                                Text(stringResource(R.string.hide_development_mode))
+                                Text(stringResource(R.string.enable_auto_time))
                             }, modifier = Modifier.clickable {
-                                devSettings = !devSettings
+                                autoTime = !autoTime
                             }, trailingContent = {
                                 Switch(
-                                    checked = devSettings,
-                                    onCheckedChange = { devSettings = it }
+                                    checked = autoTime,
+                                    onCheckedChange = { autoTime = it }
                                 )
                             })
                             ListItem(headlineText = {
-                                Text(stringResource(R.string.hide_usb_debugging))
+                                Text(stringResource(R.string.enable_auto_timezone))
                             }, modifier = Modifier.clickable {
-                                usbDebugging = !usbDebugging
+                                autoTimezone = !autoTimezone
                             }, trailingContent = {
                                 Switch(
-                                    checked = usbDebugging,
-                                    onCheckedChange = { usbDebugging = it }
-                                )
-                            })
-                            ListItem(headlineText = {
-                                Text(stringResource(R.string.hide_wireless_debugging))
-                            }, modifier = Modifier.clickable {
-                                wirelessDebugging = !wirelessDebugging
-                            }, trailingContent = {
-                                Switch(
-                                    checked = wirelessDebugging,
-                                    onCheckedChange = { wirelessDebugging = it }
+                                    checked = autoTimezone,
+                                    onCheckedChange = { autoTimezone = it }
                                 )
                             })
                         } else {
@@ -117,15 +101,14 @@ class MainActivity : ComponentActivity() {
                             result.add(
                                 Settings.Global.getInt(
                                     contentResolver,
-                                    DEVELOPMENT_SETTINGS_ENABLED,
+                                    AUTO_TIME,
                                     0
                                 ) == 1
                             )
-                            result.add(Settings.Global.getInt(contentResolver, ADB_ENABLED, 0) == 1)
                             result.add(
                                 Settings.Global.getInt(
                                     contentResolver,
-                                    ADB_WIFI_ENABLED,
+                                    AUTO_TIME_ZONE,
                                     0
                                 ) == 1
                             )
@@ -141,13 +124,13 @@ class MainActivity : ComponentActivity() {
                             )
                         } else {
                             Text(
-                                stringResource(R.string.module_not_actived),
+                                stringResource(R.string.module_not_activated),
                                 modifier = Modifier.padding(horizontal = 20.dp),
                                 color = MaterialTheme.colorScheme.error
                             )
                         }
 
-                        if (testResult?.size == 3) {
+                        if (testResult?.size == 2) {
                             fun getString(on: String, off: String, input: List<Boolean>) =
                                 input.map { if (it) on else off }.toTypedArray()
 
@@ -164,7 +147,7 @@ class MainActivity : ComponentActivity() {
                                             R.string.dialog_test_content, *getString(
                                                 stringResource(R.string.on),
                                                 stringResource(R.string.off),
-                                                testResult ?: listOf(false, false, false)
+                                                testResult ?: listOf(false, false)
                                             )
                                         )
                                     )
