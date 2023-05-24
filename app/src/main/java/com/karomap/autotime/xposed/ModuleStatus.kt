@@ -8,6 +8,7 @@ import androidx.annotation.Keep
 val isModuleActive
     @Keep get() = false
 
+@Suppress("DEPRECATION")
 @SuppressLint("WorldReadableFiles")
 fun Context.isPreferencesReady(): Boolean {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
